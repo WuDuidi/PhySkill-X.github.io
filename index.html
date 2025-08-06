@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="description" content="Mixed Reality-Assisted Human-Robot Skill Transfer via Visuomotor Primitives Toward Physical Intelligence" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AssemBrain</title>
+    <link rel="stylesheet" href="./static/css/bulma.min.css" />
+    <link rel="stylesheet" href="./static/css/fontawesome.all.min.css" />
+    <link rel="icon" href="./static/images/favicon.png" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  </head>
+  <body>
+    <section class="hero">
+      <div class="hero-body">
+        <div class="container is-max-desktop">
+          <div class="columns is-centered">
+            <div class="column has-text-centered">
+              <h1 class="title is-1 publication-title">
+                <span class="highlight"> 🦾PhySkill-X</span>
+              </h1>
+              <h2 class="title is-3 publication-title">
+                Mixed Reality-Assisted Human-Robot Skill Transfer via Visuomotor Primitives Toward Physical Intelligence
+              </h2>
+              <div class="is-size-5 publication-authors">
+                <span class="author-block">
+                  <a href="mailto:wu_duidi@sjtu.edu.cn">Duidi Wu</a>,
+                </span>
+                <span class="author-block">
+                  <a href="#">Qianyou Zhao</a>,
+                </span>
+                <span class="author-block">
+                  <a href="#">Yuliang Shen</a>,
+                </span>
+                <span class="author-block">
+                  <a href="#">Junlai Li</a>,
+                </span>                
+                <span class="author-block">
+                  <a href="#">Qiaojun Yu</a>,
+                </span> 
+                <span class="author-block">
+                  <a href="#">Pai Zheng</a>,
+                </span>               
+                <span class="author-block">
+                  <a href="mailto:jinhuaqj@sjtu.edu.cn">Jin Qi</a><sup>&dagger;</sup>,
+                </span>
+                <span class="author-block">
+                  <a href="mailto:hujie@sjtu.edu.cn">Jie Hu</a><sup>&dagger;</sup>
+                </span>
+                <!-- <span class="author-block">
+                  <a href="#">Jin Ma</a>,
+                </span>
+                <span class="author-block">
+                  <a href="#">Guo-Niu Zhu</a>,
+                </span> -->
+              </div>
+              <div class="is-size-5 publication-authors">
+                <span class="author-block">Shanghai Jiao Tong University</span>
+              </div>
+              <div class="is-size-6 publication-authors">
+                (<sup>&dagger;</sup><span class="author-block">Corresponding Author</span>)
+              </div>
+
+              <div class="column has-text-centered">
+                <div class="publication-links">
+                  <!-- Paper Link -->
+                  <span class="link-block">
+                    <a href="https://arxiv.org/abs/xxxx.xxxxx" 
+                      class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <i class="fas fa-file-pdf"></i>  
+                      </span>
+                      <span>Paper (under review)</span>
+                    </a>
+                  </span>
+                  <!-- Video Link -->
+                  <span class="link-block">
+                    <a href="https://youtu.be/your_video_id"
+                      class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <i class="fab fa-youtube"></i> 
+                      </span>
+                      <span>Video</span>
+                    </a>
+                  </span>
+                  <!-- Code Link -->
+                  <span class="link-block">
+                    <a href="https://github.com/yourrepo/assembbrain"
+                      class="external-link button is-normal is-rounded is-dark">
+                      <span class="icon">
+                        <i class="fab fa-github"></i> 
+                      </span>
+                      <span>Code (comming soon)</span>
+                    </a>
+                  </span>
+                </div>
+              </div>
+              <img src="./static/imgs/Fig_frame_0803.jpg" alt="Figure 1 Framework" style="width: 90%; margin-top: 1em; margin-bottom: 1em;" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered has-text-centered">
+          <div class="column is-four-fifths">
+            <h2 class="title is-3">Abstract</h2>
+            <div class="content has-text-justified">
+              <p>
+                Industrial assembly represents a core of manufacturing, poses significant challenges to the reliability and adaptability of robot systems. 
+                As manufacturing shifts toward intelligent production, there is an urgent need for efficient human-to-robot skill transfer methods for high-precision assembly tasks. 
+                However, current embodied intelligence research has primarily focused on household tasks, 
+                industrial applications involving dynamic uncertainties and strict control demands remain largely unexplored. 
+                To bridge this gap, we propose a real-world skill transfer framework tailored for contact-rich assembly. 
+                It integrates an AR-assisted demonstration system for low-cost and diverse data collection, 
+                an end-to-end visuomotor imitation learning algorithm for continuous action prediction, 
+                and a primitive skill library covering essential operations such as peg insertion, gear meshing, and disassembly. 
+                Experiments on six tasks demonstrate high success rates and robust positional generalization. 
+                This study explores a novel pathway, it is hoped that this work will provide valuable insights for future human-robot collaboration, 
+                and serve as a critical precursor for the integration of Industry 5.0 with embodied intelligence. 
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Method Section -->
+    <section class="section">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column is-full has-text-centered">
+            <h2 class="title is-2">Human-in-the-loop Teaching</h2>
+          </div>
+        </div>
+
+        <div class="content has-text-justified">
+          <p>
+            Robot programming in assembly tasks often requires domain expertise and extensive parameter tuning, posing barriers for non-expert users. 
+            To improve accessibility and interactivity, we developed an MR-based human-robot interaction interface leveraging head-mounted displays, 
+            MR technology, and contact force simulation for direct and safe robot teleoperation and demonstration, facilitating state-action datasets for end-to-end imitation learning.
+          </p>
+          <ul>
+            <li><strong>Real-time Feedback:</strong> Robot calibration and demonstration visualized via AR interface, ensuring high-quality data collection</li>
+            <li><strong>Cross-embodiment Portability:</strong> Supports various end-effectors and extends to different robots for flexible data acquisition</li>
+            <li><strong>Low Cost:</strong> Built with consumer-grade VR devices (e.g., Meta Quest 3), easy to deploy and replicate</li>
+            <li><strong>High Precision:</strong> Fine-grained operations through AR-based guidance and game controller-assisted small adjustments</li>
+          </ul>
+        </div>
+        
+        <div class="columns is-vcentered" style="margin-top: 2em;">
+          <div class="column is-half has-text-centered">
+            <img src="./static/imgs/Fig_VRapp6.jpg" alt="VR Application Interface" style="height: 400px; width: auto;" />
+          </div>
+          <div class="column is-half has-text-centered">
+            <video controls style="height: 400px; width: auto;">
+              <source src="./static/videos/VR_video.mp4" type="video/mp4"/>
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+
+        <div class="content" style="margin-top: 3em;">
+          <div class="has-text-centered">
+            <h3 class="title is-4">Human Demonstration Collection</h3>
+          </div>
+          <!-- <div class="columns is-vcentered">
+            <div class="column is-half">
+              <p class="has-text-justified">
+                This work implements two complementary teleoperation modes for demonstration collection: <strong>1) VR-based position control</strong> and <strong>2) gamepad-based velocity control</strong>. 
+                The VR control enables precise 6-DoF trajectory demonstrations via spatial mapping, while gamepad-based velocity control ensures stable, millimeter-scale screw-fastening through fine-grained force adjustment.
+              </p>
+            </div>
+            <div class="column is-half has-text-centered">
+              <img src="./static/imgs/Fig_dataset.jpg" alt="Human Demonstration Collection" style="width: 100%;" />
+            </div>
+          </div> -->
+          <p class="has-text-justified">
+            This work implements two complementary teleoperation modes for demonstration collection: <strong>1) VR-based position control</strong> and <strong>2) gamepad-based velocity control</strong>. 
+            The VR control enables precise 6-DoF trajectory demonstrations via spatial mapping, while gamepad-based velocity control ensures stable, millimeter-scale screw-fastening through fine-grained force adjustment.
+          </p>
+          <div class="has-text-centered" style="margin-top: 2em;">
+            <img src="./static/imgs/Fig_dataset.jpg" alt="Human Demonstration Collection" style="width: 80%;" />
+          </div>
+        </div>
+        
+
+      </div>
+    </section>
+
+
+    <!-- Assembly/Disassembly Primitives Section -->
+    <section class="section">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column is-full has-text-centered">
+            <h3 class="title is-4">Assembly/Disassembly Primitives</h3>
+          </div>
+        </div>
+
+        <div class="content">
+          <h3 class="title is-4">Assembly Tasks</h3>
+          <p class="has-text-justified">
+            The assembly tasks include peg insertion, gear meshing, and nut screwing, designed with reference to the <a href="https://arxiv.org/pdf/2205.03532" target="_blank">Factory</a> simulated benchmark. 
+            In each task, the robot must grasp parts from the task board and insert them precisely into predefined positions. 
+            To evaluate robustness, perceptual variations were introduced during data collection, changing visual inputs while preserving core task objectives.
+          </p>
+
+          <!-- Peg Insertion Task -->
+          <div class="columns is-vcentered" style="margin-top: 2em; margin-bottom: 2em;">
+            <div class="column is-one-third">
+              <h4 class="title is-5">Peg Insertion</h4>
+              <p class="has-text-justified">
+                Unlike conventional pick-and-place operations, this task requires a downward motion with insertion force. 
+                The peg features chamfers on both ends to facilitate guidance and alignment. Components are randomly positioned within four regions p<sub>1</sub>~ p<sub>4</sub> of the task board.
+              </p>
+            </div>
+            <div class="column is-one-third has-text-centered">
+              <img src="./static/imgs/task1_peg.jpg" alt="Peg Insertion Task" style="width: 90%; height: 200px; object-fit: contain;" />
+            </div>
+            <div class="column is-one-third has-text-centered">
+              <video controls style="width: 90%; height: 200px; object-fit: cover;">
+                <source src="./static/videos/peg1_round_left.mp4" type="video/mp4"/>
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          </div>
+
+          <!-- Gear Meshing Task -->
+          <div class="columns is-vcentered" style="margin-bottom: 2em;">
+            <div class="column is-one-third">
+              <h4 class="title is-5">Gear Meshing</h4>
+              <p class="has-text-justified">
+                The robot assembles a small gear onto a shaft and aligns it with a neighboring gear, 
+                requiring high accuracy in both orientation and position.
+              </p>
+            </div>
+            <div class="column is-one-third has-text-centered">
+              <img src="./static/imgs/task2_gear.jpg" alt="Gear Meshing Task" style="width: 90%; height: 200px; object-fit: contain;" />
+            </div>
+            <div class="column is-one-third has-text-centered">
+              <video controls style="width: 90%; height: 200px; object-fit: cover;">
+                <source src="./static/videos/gear1_white.mp4" type="video/mp4"/>
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          </div>
+
+          <!-- Nut Screwing Task -->
+          <div class="columns is-vcentered" style="margin-bottom: 2em;">
+            <div class="column is-one-third">
+              <h4 class="title is-5">Nut Screwing</h4>
+              <p class="has-text-justified">
+                Due to the tight clearance between the nut and bolt, the task involves multi-surface frictional contact 
+                with 6-DoF motion. The initial height of the nut relative to the bolt varies in 5 mm increments.
+              </p>
+            </div>
+            <div class="column is-one-third has-text-centered">
+              <img src="./static/imgs/task3_screw.jpg" alt="Nut Screwing Task" style="width: 90%; height: 200px; object-fit: contain;" />
+            </div>
+            <div class="column is-one-third has-text-centered">
+              <video controls style="width: 90%; height: 200px; object-fit: cover;">
+                <source src="./static/videos/screw1.mp4" type="video/mp4"/>
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          </div>
+        </div>
+
+        <div class="content" style="margin-top: 3em;">
+          <h3 class="title is-4">Disassembly Tasks</h3>
+          <p class="has-text-justified">
+            The disassembly tasks, including gear-peg removal, snap-fit disassembly, and U-peg reassembly, are inspired by the part configurations in the <a href="https://bingjietang718.github.io/pdfs/rss2024.pdf" target="_blank">AutoMate</a> dataset. 
+            The robot must remove each component from the pre-assembled task board and place it into designated containers. In task variants, the target base alternates among three predefined positions p<sub>1</sub>~ p<sub>3</sub> to test positional robustness.
+          </p>
+
+          <!-- Gear-peg Removal Task -->
+          <div class="columns is-vcentered" style="margin-top: 2em; margin-bottom: 2em;">
+            <div class="column is-one-third">
+              <h4 class="title is-5">Gear-peg Removal</h4>
+              <p class="has-text-justified">
+                The robot extracts a peg from the gear assembly and places it into a storage box.
+              </p>
+            </div>
+            <div class="column is-one-third has-text-centered">
+              <img src="./static/imgs/task4_dis1.jpg" alt="Gear-peg Removal Task" style="width: 90%; height: 200px; object-fit: contain;" />
+            </div>
+            <div class="column is-one-third has-text-centered">
+              <video controls style="width: 90%; height: 200px; object-fit: cover;">
+                <source src="./static/videos/disassembly1.mp4" type="video/mp4"/>
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          </div>
+
+          <!-- Snap-fit Disassembly Task -->
+          <div class="columns is-vcentered" style="margin-bottom: 2em;">
+            <div class="column is-one-third">
+              <h4 class="title is-5">Snap-fit Disassembly</h4>
+              <p class="has-text-justified">
+                The robot extracts the snap-fit component to release the locking mechanism and places it into the transparent storage box.
+              </p>
+            </div>
+            <div class="column is-one-third has-text-centered">
+              <img src="./static/imgs/task5_dis2.jpg" alt="Snap-fit Disassembly Task" style="width: 90%; height: 200px; object-fit: contain;" />
+            </div>
+            <div class="column is-one-third has-text-centered">
+              <video controls style="width: 90%; height: 200px; object-fit: cover;">
+                <source src="./static/videos/disassembly2.mp4" type="video/mp4"/>
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          </div>
+
+          <!-- U-peg Reassembly Task -->
+          <div class="columns is-vcentered" style="margin-bottom: 2em;">
+            <div class="column is-one-third">
+              <h4 class="title is-5">U-peg Reassembly</h4>
+              <p class="has-text-justified">
+                Involving two identical bases, the robot first removes a U-peg from one base and inserts it into the other, requiring high-precision alignment.
+              </p>
+            </div>
+            <div class="column is-one-third has-text-centered">
+              <img src="./static/imgs/task6_dis3.jpg" alt="U-peg Reassembly Task" style="width: 90%; height: 200px; object-fit: contain;" />
+            </div>
+            <div class="column is-one-third has-text-centered">
+              <video controls style="width: 90%; height: 200px; object-fit: cover;">
+                <source src="./static/videos/disassembly3.mp4" type="video/mp4"/>
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+
+    <!-- Imitation Learning Section -->
+    <section class="section">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column is-full has-text-centered">
+            <h2 class="title is-2">Imitation Learning</h2>
+          </div>
+        </div>
+
+        <div class="content has-text-justified">
+          <p>
+            Fine-grained manipulation tasks such as assembly pose substantial challenges for robots due to their stringent requirements on precision and coordination. Traditional solutions often depend on expensive sensors and complex calibration procedures. Imitation learning offers a more flexible alternative but suffers from error accumulation and distributional shift caused by the non-stationarity of human demonstrations. To address these challenges, this work introduces an efficient imitation learning framework that enables robust action sequence prediction from multimodal observations.
+          </p>
+          
+          <div class="has-text-centered" style="margin: 2em 0;">
+            <img src="./static/imgs/Fig_ACT+ro.jpg" alt="Imitation Learning Framework" style="width: 80%;" />
+          </div>
+
+          <div class="has-text-centered">
+            <h3 class="title is-4">Action Chunking Transformers Framework </h3>
+          </div>
+          <ul>
+            <li>
+              <strong>Observation Space:</strong> The complete observation space <em>𝒪</em> integrates visual perception and robot state, formally defined as:
+              <div style="text-align: center; margin: 1em 0; font-style: italic;">
+                𝒪 = {I<sub>m</sub>, I<sub>w</sub>, s<sub>state</sub>, s<sub>force</sub>}
+              </div>
+              where I<sub>m</sub> and I<sub>w</sub> represent images from the main and wrist cameras, respectively. s<sub>state</sub> = 𝒮 ∈ ℝ<sup>7</sup> denotes the end-effector state (position, Euler angles, and gripper status), while s<sub>force</sub> ∈ ℝ<sup>6</sup> corresponds to force/torque measurements.
+            </li>
+            <li>
+              <strong>Action Space:</strong> The action space <em>𝒜</em> is defined as a control vector over the end-effector pose and gripper:
+              <div style="text-align: center; margin: 1em 0; font-style: italic;">
+                𝒜 = {x, y, z, roll, pitch, yaw, gripper} ∈ ℝ<sup>7</sup>
+              </div>
+              Both <em>𝒜</em> and s<sub>state</sub> share an identical 7-dimensional structure [position, orientation, gripper], enabling direct mapping from policy outputs to robot control commands. This structural consistency facilitates the learning of state-action correlation and simplifies the deployment of trained policies to physical robots.
+            </li>
+            <li>
+              <strong>Policy Framework:</strong> The proposed policy models the generation of action sequences using a Conditional Variational Autoencoder (CVAE) framework, which learns the conditional distribution π<sub>θ</sub>(a<sub>t:t+k</sub> | s<sub>t</sub>) given the current state.
+            </li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+
+
+    <!-- Experiments Section -->
+    <section class="section">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column is-full has-text-centered">
+            <h2 class="title is-2">Real World Experiments</h2>
+          </div>
+        </div>
+
+        <div class="content">
+          <div class="has-text-centered">
+            <h3 class="title is-4">Execution Demonstrations</h3>
+          </div>
+          <p class="has-text-justified">
+            The following videos demonstrate real-world execution of assembly and disassembly tasks from both wrist camera and main camera perspectives, 
+            showcasing the precision and reliability of the learned policies across different manipulation primitives.
+          </p>
+
+
+          <!-- Assembly Execution -->
+          <div style="margin-top: 2em; margin-bottom: 3em;">
+            <h4 class="title is-5 has-text-centered">Assembly Execution</h4>
+            
+            <!-- Wrist Camera View -->
+            <div class="columns is-mobile" style="margin-bottom: 0.2em;">
+              <div class="column is-one-third has-text-centered" style="padding: 0.5rem;">
+                <p style="font-size: 0.9em; color: #666; font-weight: bold; margin-bottom: 0.5em;">Peg Insertion</p>
+                <video controls style="width: 100%; max-height: 200px;">
+                  <source src="./static/videos/task1_peg_w.mp4" type="video/mp4"/>
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+              <div class="column is-one-third has-text-centered" style="padding: 0.5rem;">
+                <p style="font-size: 0.9em; color: #666; font-weight: bold; margin-bottom: 0.5em;">Gear Meshing</p>
+                <video controls style="width: 100%; max-height: 200px;">
+                  <source src="./static/videos/task2_gear_w.mp4" type="video/mp4"/>
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+              <div class="column is-one-third has-text-centered" style="padding: 0.5rem;">
+                <p style="font-size: 0.9em; color: #666; font-weight: bold; margin-bottom: 0.5em;">Screw Fastening</p>
+                <video controls style="width: 100%; max-height: 200px;">
+                  <source src="./static/videos/task3_screw_w.mp4" type="video/mp4"/>
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            </div>
+            <p style="font-size: 0.9em; color: #888; text-align: center; margin-bottom: 1.5em; margin-top: 0.2em;">Wrist Camera View</p>
+
+            <!-- Main Camera View -->
+            <div class="columns is-mobile" style="margin-bottom: 0.2em;">
+              <div class="column is-one-third has-text-centered" style="padding: 0.5rem;">
+                <video controls style="width: 100%; max-height: 200px;">
+                  <source src="./static/videos/task1_peg_m.mp4" type="video/mp4"/>
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+              <div class="column is-one-third has-text-centered" style="padding: 0.5rem;">
+                <video controls style="width: 100%; max-height: 200px;">
+                  <source src="./static/videos/task2_gear_m_1.mp4" type="video/mp4"/>
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+              <div class="column is-one-third has-text-centered" style="padding: 0.5rem;">
+                <video controls style="width: 100%; max-height: 200px;">
+                  <source src="./static/videos/task3_screw_m_1.mp4" type="video/mp4"/>
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            </div>
+            <p style="font-size: 0.9em; color: #888; text-align: center; margin-bottom: 1.5em; margin-top: 0.2em;">Main Camera View</p>
+
+          </div>
+
+          <!-- Disassembly Execution -->
+          <div style="margin-bottom: 3em;">
+            <h4 class="title is-5 has-text-centered">Disassembly Execution</h4>
+            
+            <!-- Wrist Camera View -->
+            <div class="columns is-mobile" style="margin-bottom: 0.2em;">
+              <div class="column is-one-third has-text-centered" style="padding: 0.5rem;">
+                <p style="font-size: 0.9em; color: #666; font-weight: bold; margin-bottom: 0.5em;">Gear-peg Removal</p>
+                <video controls style="width: 100%; max-height: 200px;">
+                  <source src="./static/videos/task4_w.mp4" type="video/mp4"/>
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+              <div class="column is-one-third has-text-centered" style="padding: 0.5rem;">
+                <p style="font-size: 0.9em; color: #666; font-weight: bold; margin-bottom: 0.5em;">Snap-fit Disassembly</p>
+                <video controls style="width: 100%; max-height: 200px;">
+                  <source src="./static/videos/task5_w.mp4" type="video/mp4"/>
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+              <div class="column is-one-third has-text-centered" style="padding: 0.5rem;">
+                <p style="font-size: 0.9em; color: #666; font-weight: bold; margin-bottom: 0.5em;">U-peg Reassembly</p>
+                <video controls style="width: 100%; max-height: 200px;">
+                  <source src="./static/videos/task6_w.mp4" type="video/mp4"/>
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            </div>
+            <p style="font-size: 0.9em; color: #888; text-align: center; margin-bottom: 1.5em; margin-top: 0.2em;">Wrist Camera View</p>
+
+            <!-- Main Camera View -->
+            <div class="columns is-mobile" style="margin-bottom: 0.2em;">
+              <div class="column is-one-third has-text-centered" style="padding: 0.5rem;">
+                <video controls style="width: 100%; max-height: 200px;">
+                  <source src="./static/videos/task4_m_1.mp4" type="video/mp4"/>
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+              <div class="column is-one-third has-text-centered" style="padding: 0.5rem;">
+                <video controls style="width: 100%; max-height: 200px;">
+                  <source src="./static/videos/task5_m_1.mp4" type="video/mp4"/>
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+              <div class="column is-one-third has-text-centered" style="padding: 0.5rem;">
+                <video controls style="width: 100%; max-height: 200px;">
+                  <source src="./static/videos/task6_m_1.mp4" type="video/mp4"/>
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            </div>
+            <p style="font-size: 0.9em; color: #888; text-align: center; margin-bottom: 1.5em; margin-top: 0.2em;">Main Camera View</p>
+
+          </div>
+        </div>
+
+
+
+
+
+        <div class="content">
+          <div class="has-text-centered">
+            <h3 class="title is-4">Module Ablation</h3>
+          </div>
+          <p class="has-text-justified">
+            This study presents a systematic ablation analysis on peg insertion to assess the effects of data scale, input preprocessing, and network architecture, 
+            using the original ACT model as baseline. Experiments follow a unified protocol with 24 trials per setting across four workspace regions to evaluate spatial generalization. 
+            Aggregated results are shown in the table below.
+          </p>
+
+          <!-- <div class="has-text-centered" style="margin: 2em 0;">
+            <p style="font-weight: bold; margin-bottom: 1em;">Ablation results for peg insertion task, evaluating the impact of data and network architecture.</p>
+          </div> -->
+
+          <table class="table is-striped is-fullwidth" style="border-top: 2px solid #363636; border-bottom: 2px solid #363636;">
+            <thead>
+              <tr>
+                <th style="width: 20%; text-align: center;"><b>Configuration</b></th>
+                <th style="width: 15%; text-align: center;"><b>Training Data</b></th>
+                <th style="width: 10%; text-align: center;"><b>Input</b></th>
+                <th style="width: 10%; text-align: center;"><b>Epochs</b></th>
+                <th style="width: 10%; text-align: center;"><b>Backbone</b></th>
+                <th style="width: 15%; text-align: center;"><b>Left Success</b></th>
+                <th style="width: 15%; text-align: center;"><b>Right Success</b></th>
+                <th style="width: 15%; text-align: center;"><b>Overall Success</b></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="text-align: center;">ACT (Baseline)</td>
+                <td style="text-align: center;">50 demos</td>
+                <td style="text-align: center;">480×640</td>
+                <td style="text-align: center;">50K</td>
+                <td style="text-align: center;">ResNet</td>
+                <td style="text-align: center;">23.5%</td>
+                <td style="text-align: center;">20.0%</td>
+                <td style="text-align: center;">21.9%</td>
+              </tr>
+              <tr>
+                <td style="text-align: center;">+ Augmented Data</td>
+                <td style="text-align: center;">100 demos</td>
+                <td style="text-align: center;">480×640</td>
+                <td style="text-align: center;">100K</td>
+                <td style="text-align: center;">ResNet</td>
+                <td style="text-align: center;">41.7%</td>
+                <td style="text-align: center;">41.7%</td>
+                <td style="text-align: center;">41.7%</td>
+              </tr>
+              <tr>
+                <td style="text-align: center;">+ Cropped Input</td>
+                <td style="text-align: center;">50 demos</td>
+                <td style="text-align: center;">224×224</td>
+                <td style="text-align: center;">100K</td>
+                <td style="text-align: center;">ResNet</td>
+                <td style="text-align: center;">58.3%</td>
+                <td style="text-align: center;">83.3%</td>
+                <td style="text-align: center;">70.8%</td>
+              </tr>
+              <tr>
+                <td style="text-align: center;">+ Vision Transformer</td>
+                <td style="text-align: center;">50 demos</td>
+                <td style="text-align: center;">224×224</td>
+                <td style="text-align: center;">100K</td>
+                <td style="text-align: center;">ViT</td>
+                <td style="text-align: center;">75.0%</td>
+                <td style="text-align: center;">83.3%</td>
+                <td style="text-align: center;">79.2%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="content">
+          <div class="has-text-centered">
+            <h3 class="title is-4">Position Generalization</h3>
+          </div>
+          <p class="has-text-justified">
+            To evaluate spatial generalization, we assess policy performance across different workspace regions and task variants. 
+            The following results demonstrate success rates and failure modes for ACT-based policies on assembly tasks.
+          </p>
+
+          
+          <!-- <table class="table is-striped is-fullwidth" style="border-top: 2px solid #363636; border-bottom: 2px solid #363636;">
+            <thead>
+              <tr>
+                <th style="width: 12%; text-align: center;"><b>Task</b></th>
+                <th style="width: 17%; text-align: center;"><b>Model Config</b></th>
+                <th style="width: 20%; text-align: center;"><b>Metric</b></th>
+                <th style="width: 8%; text-align: center;"><b>P1</b></th>
+                <th style="width: 8%; text-align: center;"><b>P2</b></th>
+                <th style="width: 8%; text-align: center;"><b>P3</b></th>
+                <th style="width: 8%; text-align: center;"><b>P4</b></th>
+                <th style="width: 8%; text-align: center;"><b>P5</b></th>
+                <th style="width: 11%; text-align: center;"><b>Average</b></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td rowspan="4" style="vertical-align: middle; text-align: center;"><b>Peg Insertion</b></td>
+                <td rowspan="2" style="vertical-align: middle; text-align: center;">ACT+ResNet</td>
+                <td style="text-align: center;">Success Rate</td>
+                <td style="text-align: center;">100.0%</td>
+                <td style="text-align: center;">16.7%</td>
+                <td style="text-align: center;">83.3%</td>
+                <td style="text-align: center;">83.3%</td>
+                <td style="text-align: center;">-</td>
+                <td style="text-align: center;">70.8%</td>
+              </tr>
+              <tr>
+                <td style="text-align: center;">Failure Mode</td>
+                <td style="text-align: center;">-</td>
+                <td style="text-align: center;">GG-BF</td>
+                <td style="text-align: center;">SL</td>
+                <td style="text-align: center;">SL</td>
+                <td style="text-align: center;">-</td>
+                <td style="text-align: center;">-</td>
+              </tr>
+              <tr>
+                <td rowspan="2" style="vertical-align: middle; text-align: center;">ACT+ViT</td>
+                <td style="text-align: center;">Success Rate</td>
+                <td style="text-align: center;">100.0%</td>
+                <td style="text-align: center;">50.0%</td>
+                <td style="text-align: center;">100.0%</td>
+                <td style="text-align: center;">66.7%</td>
+                <td style="text-align: center;">-</td>
+                <td style="text-align: center;">79.2%</td>
+              </tr>
+              <tr>
+                <td style="text-align: center;">Failure Mode</td>
+                <td style="text-align: center;">-</td>
+                <td style="text-align: center;">GG-BF</td>
+                <td style="text-align: center;">-</td>
+                <td style="text-align: center;">SL</td>
+                <td style="text-align: center;">-</td>
+                <td style="text-align: center;">-</td>
+              </tr>
+              <tr>
+                <td rowspan="4" style="vertical-align: middle; text-align: center;"><b>Gear Meshing</b></td>
+                <td rowspan="2" style="vertical-align: middle; text-align: center;">ACT+ResNet</td>
+                <td style="text-align: center;">Success Rate</td>
+                <td style="text-align: center;">66.7%</td>
+                <td style="text-align: center;">66.7%</td>
+                <td style="text-align: center;">33.3%</td>
+                <td style="text-align: center;">33.3%</td>
+                <td style="text-align: center;">-</td>
+                <td style="text-align: center;">50.0%</td>
+              </tr>
+              <tr>
+                <td style="text-align: center;">Failure Mode</td>
+                <td style="text-align: center;">GG-BF</td>
+                <td style="text-align: center;">PM</td>
+                <td style="text-align: center;">MT</td>
+                <td style="text-align: center;">GG-BF</td>
+                <td style="text-align: center;">-</td>
+                <td style="text-align: center;">-</td>
+              </tr>
+              <tr>
+                <td rowspan="2" style="vertical-align: middle; text-align: center;">ACT+ViT</td>
+                <td style="text-align: center;">Success Rate</td>
+                <td style="text-align: center;">33.3%</td>
+                <td style="text-align: center;">33.3%</td>
+                <td style="text-align: center;">33.3%</td>
+                <td style="text-align: center;">33.3%</td>
+                <td style="text-align: center;">-</td>
+                <td style="text-align: center;">33.3%</td>
+              </tr>
+              <tr>
+                <td style="text-align: center;">Failure Mode</td>
+                <td style="text-align: center;">GG-BF</td>
+                <td style="text-align: center;">MT</td>
+                <td style="text-align: center;">PM</td>
+                <td style="text-align: center;">MT</td>
+                <td style="text-align: center;">-</td>
+                <td style="text-align: center;">-</td>
+              </tr>
+              <tr>
+                <td rowspan="4" style="vertical-align: middle; text-align: center;"><b>Screw Fastening</b></td>
+                <td rowspan="2" style="vertical-align: middle; text-align: center;">ACT+ResNet</td>
+                <td style="text-align: center;">Success Rate</td>
+                <td style="text-align: center;">75.0%</td>
+                <td style="text-align: center;">100.0%</td>
+                <td style="text-align: center;">100.0%</td>
+                <td style="text-align: center;">100.0%</td>
+                <td style="text-align: center;">80.0%</td>
+                <td style="text-align: center;">90.5%</td>
+
+              </tr>
+              <tr>
+                <td style="text-align: center;">Failure Mode</td>
+                <td style="text-align: center;">PS</td>
+                <td style="text-align: center;">-</td>
+                <td style="text-align: center;">-</td>
+                <td style="text-align: center;">-</td>
+                <td style="text-align: center;">PS</td>
+                <td style="text-align: center;">-</td>
+              </tr>
+              <tr>
+                <td rowspan="2" style="vertical-align: middle; text-align: center;">ACT+ViT</td>
+                <td style="text-align: center;">Success Rate</td>
+                <td style="text-align: center;">50.0%</td>
+                <td style="text-align: center;">75.0%</td>
+                <td style="text-align: center;">100.0%</td>
+                <td style="text-align: center;">50.0%</td>
+                <td style="text-align: center;">25.0%</td>
+                <td style="text-align: center;">60.0%</td>
+              </tr>
+              <tr>
+                <td style="text-align: center;">Failure Mode</td>
+                <td style="text-align: center;">MT</td>
+                <td style="text-align: center;">PS</td>
+                <td style="text-align: center;">-</td>
+                <td style="text-align: center;">MT</td>
+                <td style="text-align: center;">MT</td>
+                <td style="text-align: center;">-</td>
+              </tr>
+            </tbody>
+          </table> -->
+          
+          <div class="has-text-centered" style="margin-top: 2em;">
+            <img src="./static/imgs/Fig_ex_bar.jpg" alt="Position Generalization Results" style="width: 80%;" />
+          </div>
+
+          <div style="margin-top: 1em;">
+            <p style="font-size: 0.9em; color: #666;">
+              <strong>Failure Modes:</strong> <b>GG-BF</b> = Good Grasp & Bad Fit, <b>SL</b> = Slipped, <b>PM</b> = Partial Meshing/Misalignment, <b>MT</b> = Missed Target, <b>PS</b> = Position Shift
+            </p>
+            <p style="font-size: 0.9em; color: #666;">
+              <strong>Note:</strong> For Peg Insertion and Gear Mesh, positions refer to workspace corners (P1: Top-Left, P2: Bottom-Left, P3: Top-Right, P4: Bottom-Right). 
+              For Screw Fastening, positions refer to initial height variations (Default, +5mm, +10mm, +15mm, +20mm).
+            </p>
+          </div>
+        
+        </div>
+
+        <div class="content">
+          <div class="has-text-centered">
+            <h3 class="title is-4">Interpretability</h3>
+          </div>
+      
+          
+          <div style="margin-top: 2em;">
+            <!-- <div class="has-text-centered">
+            <h4 class="title is-5">Attention Visualization</h4>
+            </div> -->
+            <p class="has-text-justified">
+              <b>Attention Visualization:</b> To address the interpretability challenge in end-to-end approaches, we employ Grad-CAM to analyze the model's learned representations. 
+              As shown in below, our model accurately focuses on task-critical elements such as pins, holes, and small gears, effectively capturing manipulation-relevant regions. 
+              This demonstrates that using first-person data effectively narrows the domain gap between training and deployment, enabling more efficient human-to-robot skill transfer.
+            </p>
+            
+            <div class="has-text-centered" style="margin-top: 2em;">
+              <img src="./static/imgs/Fig_attn.jpg" alt="Attention Visualization" style="width: 80%;" />
+            </div>
+          </div>
+
+          <div style="margin-top: 3em;">
+            <!-- <div class="has-text-centered">
+            <h4 class="title is-5">Trajectory Visualization</h4>
+            </div> -->
+            <p class="has-text-justified">
+              <b>Trajectory Visualization</b>: The figure below presents the trajectory visualization results of the proposed imitation learning framework across three representative assembly and disassembly tasks. 
+              Each subfigure illustrates the end-effector's complete 3D motion trajectory, with color gradients representing temporal evolution and clearly annotated critical points (initial, intermediate, and target positions).
+            </p>
+            
+            <div class="has-text-centered" style="margin-top: 2em;">
+              <img src="./static/imgs/Fig_3Dtraj.jpg" alt="Trajectory Visualization" style="width: 80%;" />
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+        
+    <section class="section" id="BibTeX">
+      <div class="container is-max-desktop content">
+        <div class="columns is-centered has-text-centered">
+          <h2 class="title">BibTeX</h2>
+        </div>
+        <p>If you find it helpful, please consider citing our work: </p>
+        <pre><code>@article{wu2025PhySkillX,
+  title={Mixed Reality-Assisted Human-Robot Skill Transfer via Visuomotor Primitives Toward Physical Intelligence},
+  author={Wu,Duidi and Zhao,Qianyou and Shen,Yuliang and Li,Junlai and Yu,Qiaojun and Zheng,Pai and Qi,Jin and Hu,Jie},
+  journal={preprint},
+  year={2024}
+}
+</code></pre>
+      </div>
+    </section>
+
+
+    <footer class="footer">
+      <div class="container">
+        <div class="columns is-centered">
+          <div class="column is-8">
+            <div class="content has-text-centered">
+              <p>
+                This website is licensed under a
+                <a
+                  rel="license"
+                  href="http://creativecommons.org/licenses/by-sa/4.0/"
+                  >Creative Commons Attribution-ShareAlike 4.0 International
+                  License</a
+                >.
+              </p>
+              <p>
+                This page is modified upon
+                <a href="https://nerfies.github.io/">Nerfies</a> website (<a
+                  href="https://github.com/nerfies/nerfies.github.io"
+                  >source</a
+                >).
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </body>
+</html>
